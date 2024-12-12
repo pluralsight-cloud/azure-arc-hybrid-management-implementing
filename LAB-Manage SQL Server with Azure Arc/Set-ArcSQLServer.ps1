@@ -52,7 +52,7 @@
  ## Ensure C:\Temp exists
  New-Item -Path 'C:\Temp' -ItemType Directory -ErrorAction SilentlyContinue
  ## Download the Script
- Invoke-WebRequest -Uri 'TODO Disable-AzureAgent.ps1' -OutFile 'C:\Temp\Disable-AzureAgent.ps1'
+ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/pluralsight-cloud/azure-arc-hybrid-management-implementing/refs/heads/main/LAB-Manage%20SQL%20Server%20with%20Azure%20Arc/Disable-AzureAgent.ps1' -OutFile 'C:\Temp\Disable-AzureAgent.ps1'
  ## Set the Scheduled Task
  $Action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-File C:\Temp\Disable-AzureAgent.ps1"
  $Trigger = New-ScheduledTaskTrigger -At (Get-Date).AddMinutes(1) -Once 
