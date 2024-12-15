@@ -18,7 +18,7 @@ Connect-AzConnectedMachine -ResourceGroupName $ResourceGroup.ResourceGroupName -
 ## Ensure C:\Temp exists
 New-Item -Path 'C:\Temp' -ItemType Directory -ErrorAction SilentlyContinue
 ## Download the Script
-Invoke-WebRequest -Uri 'https://gist.githubusercontent.com/WayneHoggett-ACG/237511d78be0229e36b7c91268d960f5/raw/Set-ArcIssues.ps1' -OutFile 'C:\Temp\Set-ArcIssues.ps1'
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/pluralsight-cloud/azure-arc-hybrid-management-implementing/refs/heads/main/LAB-Troubleshoot%20Monitoring%20and%20Compliance%20with%20Azure%20Arc/Set-ArcIssues.ps1' -OutFile 'C:\Temp\Set-ArcIssues.ps1'
 ## Set the Scheduled Task
 $Action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-File C:\Temp\Set-ArcIssues.ps1"
 $Trigger = New-ScheduledTaskTrigger -At (Get-Date).AddMinutes(1) -Once 
