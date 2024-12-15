@@ -1,5 +1,5 @@
 namePrefix: arc-
-
+namespace: default
 resources:
 - guestbook-ui-deployment.yaml
 - guestbook-ui-svc.yaml
