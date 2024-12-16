@@ -9,12 +9,16 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-10
   name: 'law-default'
 }
 
-resource arcVMs 'Microsoft.HybridCompute/machines@2024-07-10' existing = [for arcVM in arcVMNames: {
+resource arcVMs 'Microsoft.Compute/virtualMachines@2024-07-01' existing = [for arcVM in arcVMNames: {
+  name: arcVM
+}]
+
+resource arcMachines 'Microsoft.HybridCompute/machines@2024-07-10' existing = [for arcVM in arcVMNames: {
   name: arcVM
 }]
 
 resource linuxAgent 'Microsoft.HybridCompute/machines/extensions@2021-12-10-preview' = [for (arcVM,index) in arcVMNames: {
-  parent: arcVMs[index]
+  parent: arcMachines[index]
   name: 'AzureMonitorLinuxAgent'
   location: location
   properties: {
@@ -85,10 +89,25 @@ resource MSVMIDCR 'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
 }
 
 resource DCRAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2021-09-01-preview' = [for (arcVM,index) in arcVMNames: {
-  scope: arcVMs[index]
+  scope: arcMachines[index]
   name: '${arcVMs[index].name}-vmInsights'
   properties: {
     description: 'Association of data collection rule. Deleting this association will break the data collection for this virtual machine.'
     dataCollectionRuleId: MSVMIDCR.id
+  }
+}]
+
+resource LinuxVM1CSE 'Microsoft.HybridCompute/machines/extensions@2024-07-10' = [for (arcVM,index) in arcVMNames: {
+  parent: arcMachines[index]
+  name: 'cse-${arcMachines[index].name}'
+  location: location
+  properties: {
+    publisher: 'Microsoft.Azure.Extensions'
+    type: 'CustomScript'
+    typeHandlerVersion: '2.1'
+    autoUpgradeMinorVersion: true
+    protectedSettings: {
+      commandToExecute: 'curl -sL https://github.com/pluralsight-cloud/azure-arc-hybrid-management-implementing/blob/main/LAB-Manage%20hybrid%20environments%20with%20Azure%20Arc/detect_k8s_and_arc_enable.sh | sudo bash'
+    }
   }
 }]
