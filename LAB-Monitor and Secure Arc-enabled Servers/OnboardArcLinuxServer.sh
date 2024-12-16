@@ -24,7 +24,7 @@ TOKEN=$(az account get-access-token --resource-type arm --query accessToken --ou
 # Download the installation package.
 wget https://aka.ms/azcmagent -O ~/Install_linux_azcmagent.sh
 
-# Configure its uncomplicated firewall (UFW)
+# Configure the uncomplicated firewall (UFW)
 ufw --force enable
 ufw deny out from any to 169.254.169.254
 ufw default allow incoming
