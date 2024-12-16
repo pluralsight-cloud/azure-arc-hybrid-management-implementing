@@ -9,10 +9,6 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-10
   name: 'law-default'
 }
 
-resource arcVMs 'Microsoft.Compute/virtualMachines@2024-07-01' existing = [for arcVM in arcVMNames: {
-  name: arcVM
-}]
-
 resource arcMachines 'Microsoft.HybridCompute/machines@2024-07-10' existing = [for arcVM in arcVMNames: {
   name: arcVM
 }]
@@ -90,7 +86,7 @@ resource MSVMIDCR 'Microsoft.Insights/dataCollectionRules@2021-04-01' = {
 
 resource DCRAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2021-09-01-preview' = [for (arcVM,index) in arcVMNames: {
   scope: arcMachines[index]
-  name: '${arcVMs[index].name}-vmInsights'
+  name: '${arcMachines[index].name}-vmInsights'
   properties: {
     description: 'Association of data collection rule. Deleting this association will break the data collection for this virtual machine.'
     dataCollectionRuleId: MSVMIDCR.id
