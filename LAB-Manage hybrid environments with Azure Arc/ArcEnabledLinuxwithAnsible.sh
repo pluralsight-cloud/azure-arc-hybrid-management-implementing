@@ -17,7 +17,7 @@ sudo apt-get install at
 sudo systemctl enable atd
 sudo systemctl start atd
 
-# So the agent can report completion back to ARM, allow the firewall access to ARM, then disable it and the agent after a minute
+# Configure for Arc-onboarding
 ufw --force enable
 ufw default allow incoming
 echo -e "sudo systemctl stop walinuxagent" | at now + 1 minute
