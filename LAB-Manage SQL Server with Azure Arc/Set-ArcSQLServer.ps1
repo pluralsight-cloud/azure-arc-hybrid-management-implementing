@@ -46,9 +46,9 @@
  New-Item -Path "C:\" -Name "Temp" -ItemType Directory -ErrorAction SilentlyContinue
  Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2215202&clcid=0x409&culture=en-us&country=us" -OutFile "C:\Temp\SQL2022-SSEI-Eval.exe"
  Set-Location -Path "C:\Temp"
- 
+
  # Install SQL Server
-.\SQL2022-SSEI-Eval.exe /IAcceptSqlServerLicenseTerms /Quiet /Action=Install /Language=en-US
+ Start-Process -FilePath "cmd.exe" -ArgumentList "/c start .\SQL2022-SSEI-Eval.exe /IAcceptSqlServerLicenseTerms /Quiet /Action=Install /Language=en-US"
  
  # Set a Scheduled Task to Disable the Azure VM Guest Agent and the Azure IMDS endpoint
  ## Ensure C:\Temp exists
