@@ -63,7 +63,12 @@ Add-LocalGroupMember -Group Administrators -Member $Username
 $Action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-Command C:\Temp\SQL2022-SSEI-Eval.exe /IAcceptSqlServerLicenseTerms /Quiet /Action=Install /Language=en-US"
 $Trigger = New-ScheduledTaskTrigger -At (Get-Date).AddMinutes(1) -Once
 Register-ScheduledTask -TaskName "Install-SQLServer" -Action $Action -Trigger $Trigger -Description "Install-SQLServer" -RunLevel Highest -User $Username -Password $Password 
- 
+
+# Wait until at least the SQL Server service exists before continuing
+While (-not (Get-Service -Name 'MSSQLSERVER' -ErrorAction SilentlyContinue)) {
+    Start-Sleep -Seconds 5
+}
+
 # Set a Scheduled Task to Disable the Azure VM Guest Agent and the Azure IMDS endpoint
 ## Ensure C:\Temp exists
 New-Item -Path 'C:\Temp' -ItemType Directory -ErrorAction SilentlyContinue
