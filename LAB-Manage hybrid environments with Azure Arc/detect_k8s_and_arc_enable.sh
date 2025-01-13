@@ -24,5 +24,5 @@ if pgrep -f kubelet > /dev/null 2>&1; then
 	# Arc-enable the AKS Cluster
 	az connectedk8s connect --name $ARCK8S --resource-group $RG --distribution k3s --kube-config /etc/rancher/k3s/k3s.yaml
 else
-	echo " kubelet is not running, will not Arc-enable"
+	echo "kubelet is not running, will not Arc-enable"
 fi

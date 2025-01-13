@@ -44,7 +44,7 @@ Get-ScheduledTask -TaskName ServerManager | Disable-ScheduledTask -Verbose
 
 # Set Network Profile to Private and enable network discovery
 Set-NetConnectionProfile -NetworkCategory Private
-Get-NetFirewallRule -DisplayGroup 'Network Discovery'|Set-NetFirewallRule -Profile 'Private' -Enabled true
+Get-NetFirewallRule -DisplayGroup 'Network Discovery' | Set-NetFirewallRule -Profile 'Private' -Enabled true
  
 # Download SQL Server Trial
 New-Item -Path "C:\" -Name "Temp" -ItemType Directory -ErrorAction SilentlyContinue
