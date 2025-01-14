@@ -9,9 +9,6 @@ if pgrep -f kubelet > /dev/null 2>&1; then
 	# Install the connectedk8s extension
 	az extension add --name connectedk8s
 
-	# Allow traffic out to 169.254.169.254
-	ufw allow out from any to 169.254.169.254
-
 	# Connect to Azure using a service principal and secret (As first, second arguments and third arguments, respectively)
 	az login --service-principal -u $1 -p $2 --tenant $3
 

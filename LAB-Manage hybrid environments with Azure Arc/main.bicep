@@ -108,7 +108,7 @@ resource CSE 'Microsoft.HybridCompute/machines/extensions@2024-07-10' = [for (ar
     autoUpgradeMinorVersion: true
     forceUpdateTag: forceUpdateTag
     protectedSettings: {
-      commandToExecute: 'curl -sL https://raw.githubusercontent.com/pluralsight-cloud/azure-arc-hybrid-management-implementing/refs/heads/main/LAB-Manage%20hybrid%20environments%20with%20Azure%20Arc/detect_k8s_and_arc_enable.sh | sudo bash -- ${servicePrincipalId} ${servicePrincipalSecret} ${tenant().tenantId}'
+      commandToExecute: 'curl -sL https://raw.githubusercontent.com/pluralsight-cloud/azure-arc-hybrid-management-implementing/refs/heads/main/LAB-Manage%20hybrid%20environments%20with%20Azure%20Arc/detect_k8s_and_arc_enable.sh | sudo bash -s -- ${servicePrincipalId} ${servicePrincipalSecret} ${tenant().tenantId}'
     }
   }
 }]
