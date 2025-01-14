@@ -99,7 +99,7 @@ resource DCRAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2021-
 
 resource CSE 'Microsoft.HybridCompute/machines/extensions@2024-07-10' = [for (arcVM,index) in arcVMNames: {
   parent: arcMachines[index]
-  name: 'cse-${arcMachines[index].name}'
+  name: 'cse-Arc-${arcMachines[index].name}'
   location: location
   properties: {
     publisher: 'Microsoft.Azure.Extensions'
