@@ -1,10 +1,5 @@
 if pgrep -f kubelet > /dev/null 2>&1; then
 	echo "kubelet is running - will Arc enable"
-	# Install the Azure CLI
-	curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-
-	# Install K3s
-	curl -sfL https://get.k3s.io | sh -
 
 	# Install Helm
 	curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -13,6 +8,9 @@ if pgrep -f kubelet > /dev/null 2>&1; then
 
 	# Install the connectedk8s extension
 	az extension add --name connectedk8s
+
+	# Allow traffic out to 169.254.169.254
+	ufw allow out from any to 169.254.169.254
 
 	# Connect to Azure using the Managed Identity
 	az login --identity

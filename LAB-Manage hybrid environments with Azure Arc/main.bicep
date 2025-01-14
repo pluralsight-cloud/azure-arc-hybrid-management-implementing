@@ -2,6 +2,7 @@ param arcVMNames array = [
   'LinuxVM1'
   'LinuxVM2'
 ]
+param forceUpdateTag string = utcNow()
 
 var location  = resourceGroup().location
 
@@ -102,9 +103,9 @@ resource CSE 'Microsoft.HybridCompute/machines/extensions@2024-07-10' = [for (ar
     type: 'CustomScript'
     typeHandlerVersion: '2.1'
     autoUpgradeMinorVersion: true
+    forceUpdateTag: forceUpdateTag
     protectedSettings: {
-      commandToExecute: 'curl -sL https://github.com/pluralsight-cloud/azure-arc-hybrid-management-implementing/blob/main/LAB-Manage%20hybrid%20environments%20with%20Azure%20Arc/detect_k8s_and_arc_enable.sh | sudo bash'
+      commandToExecute: 'curl -sL https://raw.githubusercontent.com/pluralsight-cloud/azure-arc-hybrid-management-implementing/refs/heads/main/LAB-Manage%20hybrid%20environments%20with%20Azure%20Arc/detect_k8s_and_arc_enable.sh | sudo bash'
     }
   }
 }]
-
