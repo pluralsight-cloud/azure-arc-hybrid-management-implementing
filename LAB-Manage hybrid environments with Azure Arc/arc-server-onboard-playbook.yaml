@@ -10,6 +10,12 @@
       subscription_id: 'SUBSCRIPTION-ID'
       location: 'LOCATION'
   tasks:
+
+  - name: Ensure Linux Test Azure Virtual Machine is ready to be connected to Azure Arc
+    become: yes
+    shell: systemctl stop walinuxagent && systemctl disable walinuxagent && ufw --force enable && ufw default allow incoming && ufw deny out from any to 169.254.169.254
+    when: ansible_system == 'Linux'
+
   - name: Check if the Connected Machine Agent has already been downloaded on Linux servers
     stat:
       path: /usr/bin/azcmagent
