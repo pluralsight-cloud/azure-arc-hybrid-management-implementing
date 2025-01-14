@@ -3,8 +3,15 @@ param arcVMNames array = [
   'LinuxVM2'
 ]
 param forceUpdateTag string = utcNow()
+param servicePrincipalId string
+@secure()
+param servicePrincipalSecret string
 
 var location  = resourceGroup().location
+
+resource KubernetesClusterAzureArcOnboardingIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
+  name: 'KubernetesClusterAzureArcOnboardingIdentity'
+}
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-10-01' existing = {
   name: 'law-default'
@@ -105,7 +112,7 @@ resource CSE 'Microsoft.HybridCompute/machines/extensions@2024-07-10' = [for (ar
     autoUpgradeMinorVersion: true
     forceUpdateTag: forceUpdateTag
     protectedSettings: {
-      commandToExecute: 'curl -sL https://raw.githubusercontent.com/pluralsight-cloud/azure-arc-hybrid-management-implementing/refs/heads/main/LAB-Manage%20hybrid%20environments%20with%20Azure%20Arc/detect_k8s_and_arc_enable.sh | sudo bash'
+      commandToExecute: 'curl -sL https://raw.githubusercontent.com/pluralsight-cloud/azure-arc-hybrid-management-implementing/refs/heads/main/LAB-Manage%20hybrid%20environments%20with%20Azure%20Arc/detect_k8s_and_arc_enable.sh | sudo bash -- ${servicePrincipalId} ${servicePrincipalSecret} ${tenant().tenantId}'
     }
   }
 }]
