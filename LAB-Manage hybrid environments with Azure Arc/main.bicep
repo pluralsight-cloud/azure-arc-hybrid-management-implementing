@@ -9,10 +9,6 @@ param servicePrincipalSecret string
 
 var location  = resourceGroup().location
 
-resource KubernetesClusterAzureArcOnboardingIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
-  name: 'KubernetesClusterAzureArcOnboardingIdentity'
-}
-
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-10-01' existing = {
   name: 'law-default'
 }
