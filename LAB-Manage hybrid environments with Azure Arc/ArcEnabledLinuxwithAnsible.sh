@@ -20,7 +20,7 @@ systemctl start atd
 # Configure for Arc-onboarding
 ufw --force enable
 ufw default allow incoming
-echo -e "sudo systemctl stop walinuxagent && sudo systemctl disable walinuxagent && sudo ufw deny out from any to 169.254.169.254" | at now + 1 minute
+echo -e "sudo systemctl stop walinuxagent && sudo systemctl disable walinuxagent && sudo ufw deny out from any to 169.254.169.254" | at now + 3 minute
 
 # List scheduled at jobs
 atq
