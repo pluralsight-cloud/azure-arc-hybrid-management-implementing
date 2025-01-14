@@ -6,6 +6,9 @@ if pgrep -f kubelet > /dev/null 2>&1; then
 	chmod 700 get_helm.sh
 	./get_helm.sh
 
+	# Install the Azure CLI
+	curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
 	# Install the connectedk8s extension
 	az extension add --name connectedk8s
 
