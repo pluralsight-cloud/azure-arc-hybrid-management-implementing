@@ -48,7 +48,7 @@ Get-NetFirewallRule -DisplayGroup 'Network Discovery' | Set-NetFirewallRule -Pro
  
 # Download SQL Server Trial
 New-Item -Path "C:\" -Name "Temp" -ItemType Directory -ErrorAction SilentlyContinue
-Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2215202&clcid=0x409&culture=en-us&country=us" -OutFile "C:\Temp\SQL2022-SSEI-Eval.exe"
+Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2342429&clcid=0x409&culture=en-us&country=us" -OutFile "C:\Temp\SQL2025-SSEI-Eval.exe"
 Set-Location -Path "C:\Temp"
 
 # Install SQL Server
@@ -60,7 +60,7 @@ New-LocalUser -Name $Username -Password $SecurePassword
 Add-LocalGroupMember -Group Administrators -Member $Username
 
 ## Set a Scheduled Task to Install SQL Server
-$Action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-Command C:\Temp\SQL2022-SSEI-Eval.exe /IAcceptSqlServerLicenseTerms /Quiet /Action=Install /Language=en-US"
+$Action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-Command C:\Temp\SQL2025-SSEI-Eval.exe /IAcceptSqlServerLicenseTerms /Quiet /Action=Install /Language=en-US"
 $Trigger = New-ScheduledTaskTrigger -At (Get-Date).AddMinutes(1) -Once
 Register-ScheduledTask -TaskName "Install-SQLServer" -Action $Action -Trigger $Trigger -Description "Install-SQLServer" -RunLevel Highest -User $Username -Password $Password 
 
